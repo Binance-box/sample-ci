@@ -41,7 +41,7 @@ jobs:
 
           for lang in $(cat .cli.json | server_langs_in_sample main)
           do
-            [ "$lang" = "php" ] && continue
+            [ "$lang" = "php" ] && continue # not compatible with existing tests
 
             echo "PRICE=price_1Hf3k8CWW2eVYDoPDT6y9NLt" > ./server/${lang}/.env
             echo "DOMAIN=http://web:4242" >> ./server/${lang}/.env
@@ -49,7 +49,7 @@ jobs:
 
             ci/configure_docker_compose . "$lang" ../../client/html \
                                         target/single-product-checkout-1.0.0-SNAPSHOT-jar-with-dependencies.jar
-            ci/run_tests spec/client_and_server_spec.rb
+            ci/run_tests spec/client_and_server_spec.rb || docker-compose logs web
           done
 
           docker-compose stop
