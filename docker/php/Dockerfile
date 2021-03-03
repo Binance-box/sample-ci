@@ -1,4 +1,7 @@
-FROM composer:1.10
+FROM php:7-buster
+
+RUN apt update && apt install -y git
+COPY --from=composer:1.10 /usr/bin/composer /usr/bin/composer
 
 ARG sample
 
