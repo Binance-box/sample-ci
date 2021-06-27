@@ -1,1 +1,1 @@
-FROM maven:3.6-openjdk-15
+FROM maven:3.8-openjdk-16
